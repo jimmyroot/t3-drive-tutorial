@@ -14,7 +14,7 @@ const globalForDb = globalThis as unknown as {
   conn: Pool | undefined;
 };
 
-const conn =
+export const conn =
   globalForDb.conn ??
   createPool({
     host: env.SINGLESTORE_HOST,
@@ -31,3 +31,5 @@ if (env.NODE_ENV !== "production") globalForDb.conn = conn;
 conn.addListener("error", (err) => {
   console.error("Database connection error:", err);
 });
+
+export const db = drizzle(conn, { schema });
