@@ -1,28 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { mockFiles } from "../lib/mock-data"; // { File, mockFiles }
+import { useMemo, useState } from "react";
+import { mockFiles, mockFolders } from "../lib/mock-data"; // { File, mockFiles }
 import { Folder, FileIcon, Upload, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Button } from "~/components/ui/button";
+import { FileRow, FolderRow } from "~/components/FileRow";
 
 export default function GoogleDriveClone() {
-  const [currentFolder, setCurrentFolder] = useState<string | null>(null);
+  const [currentFolder, setCurrentFolder] = useState<string>("root");
 
   const getCurrentFiles = () => {
     return mockFiles.filter((file) => file.parent === currentFolder);
+  };
+
+  const getCurrentFolders = () => {
+    return mockFolders.filter((folder) => folder.parent === currentFolder);
   };
 
   const handleFolderClick = (folderId: string) => {
     setCurrentFolder(folderId);
   };
 
-  const getBreadcrumbs = () => {
+  const breadcrumbs = useMemo(() => {
     const breadcrumbs = [];
-    let currentId = currentFolder;
+    let currentId: string | null = currentFolder;
 
     while (currentId !== null) {
-      const folder = mockFiles.find((file) => file.id === currentId);
+      const folder = mockFolders.find((file) => file.id === currentId);
       if (folder) {
         breadcrumbs.unshift(folder);
         currentId = folder.parent;
@@ -32,7 +37,24 @@ export default function GoogleDriveClone() {
     }
 
     return breadcrumbs;
-  };
+  }, [currentFolder]);
+
+  // const getBreadcrumbs = () => {
+  //   const breadcrumbs = [];
+  //   let currentId: string | null = currentFolder;
+
+  //   while (currentId !== null) {
+  //     const folder = mockFolders.find((file) => file.id === currentId);
+  //     if (folder) {
+  //       breadcrumbs.unshift(folder);
+  //       currentId = folder.parent;
+  //     } else {
+  //       break;
+  //     }
+  //   }
+
+  //   return breadcrumbs;
+  // };
 
   const handleUpload = () => {
     alert("Upload functionality would be implemented here");
@@ -43,25 +65,32 @@ export default function GoogleDriveClone() {
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center">
-            <Button
-              onClick={() => setCurrentFolder(null)}
+            {/* <Button
+              onClick={() => setCurrentFolder("root")}
               variant="ghost"
               className="mr-2 text-gray-300 hover:text-white"
             >
               My Drive
-            </Button>
-            {getBreadcrumbs().map((folder) => (
-              <div key={folder.id} className="flex items-center">
-                <ChevronRight className="mx-2 text-gray-500" size={16} />
-                <Button
-                  onClick={() => handleFolderClick(folder.id)}
-                  variant="ghost"
-                  className="text-gray-300 hover:text-white"
-                >
-                  {folder.name}
-                </Button>
-              </div>
-            ))}
+            </Button> */}
+            {breadcrumbs.map((folder) => {
+              const isRoot = folder.parent === null;
+              return (
+                <div key={folder.id} className="flex items-center">
+                  {isRoot ? (
+                    ""
+                  ) : (
+                    <ChevronRight className="mx-2 text-gray-500" size={16} />
+                  )}
+                  <Button
+                    onClick={() => handleFolderClick(folder.id)}
+                    variant="ghost"
+                    className="text-gray-300 hover:text-white"
+                  >
+                    {isRoot ? "My Drive" : folder.name}
+                  </Button>
+                </div>
+              );
+            })}
           </div>
           <Button
             onClick={handleUpload}
@@ -80,39 +109,17 @@ export default function GoogleDriveClone() {
             </div>
           </div>
           <ul>
+            {getCurrentFolders().map((folder) => (
+              <FolderRow
+                key={folder.id}
+                folder={folder}
+                handleFolderClick={() => {
+                  setCurrentFolder(folder.id);
+                }}
+              />
+            ))}
             {getCurrentFiles().map((file) => (
-              <li
-                key={file.id}
-                className="hover:bg-gray-750 border-b border-gray-700 px-6 py-4"
-              >
-                <div className="grid grid-cols-12 items-center gap-4">
-                  <div className="col-span-6 flex items-center">
-                    {file.type === "folder" ? (
-                      <button
-                        onClick={() => handleFolderClick(file.id)}
-                        className="flex items-center text-gray-100 hover:text-blue-400"
-                      >
-                        <Folder className="mr-3" size={20} />
-                        {file.name}
-                      </button>
-                    ) : (
-                      <Link
-                        href={file.url ?? "#"}
-                        className="flex items-center text-gray-100 hover:text-blue-400"
-                      >
-                        <FileIcon className="mr-3" size={20} />
-                        {file.name}
-                      </Link>
-                    )}
-                  </div>
-                  <div className="col-span-3 text-gray-400">
-                    {file.type === "folder" ? "Folder" : "File"}
-                  </div>
-                  <div className="col-span-3 text-gray-400">
-                    {file.type === "folder" ? "--" : "2 MB"}
-                  </div>
-                </div>
-              </li>
+              <FileRow key={file.id} file={file} />
             ))}
           </ul>
         </div>
