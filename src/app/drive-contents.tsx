@@ -41,7 +41,7 @@ export default function GoogleDriveClone(props: {
             className="bg-blue-600 text-white hover:bg-blue-700"
           >
             <Upload className="mr-2" size={20} />
-            Upload
+            Upload File
           </Button>
         </div>
         <div className="rounded-lg bg-gray-800 shadow-xl">

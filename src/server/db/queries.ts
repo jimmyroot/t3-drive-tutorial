@@ -36,9 +36,3 @@ export const QUERIES = {
       .where(eq(foldersSchema.parent, folderId));
   },
 };
-
-async function getAllParentsForFolder(folderId: number) {}
-
-async function getFolders(folderId: number) {}
-
-async function getFiles(folderId: number) {}
