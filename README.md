@@ -11,6 +11,6 @@
 
 ## Notes 24-06-25
 
-- [ ] Change folders to link components, remove client state
-- [ ] Clean up the database and data fetching patterns
+- [x] Change folders to link components, remove client state
+- [x] Clean up the database and data fetching patterns
 - [ ] Real homepage
