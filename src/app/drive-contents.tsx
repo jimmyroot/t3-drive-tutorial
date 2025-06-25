@@ -6,6 +6,7 @@ import { Button } from "~/components/ui/button";
 import { FileRow, FolderRow } from "~/components/FileRow";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 
 export default function GoogleDriveClone(props: {
   files: (typeof files_table.$inferSelect)[];
@@ -24,25 +25,35 @@ export default function GoogleDriveClone(props: {
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center">
             {/* <Link href="/f/1">My Drive</Link> */}
-            {props.parents.map((folder) => (
+            {props.parents.map((folder, index) => (
               <div key={folder.id} className="flex items-center">
-                <ChevronRight className="mx-2 text-gray-500" size={16} />
+                {index !== 0 && (
+                  <ChevronRight className="mx-2 text-gray-500" size={16} />
+                )}
                 <Link
                   href={`/f/${folder.id}`}
                   className="text-gray-300 hover:text-white"
                 >
-                  {folder.name}
+                  {folder.name === "root" ? "My Drive" : folder.name}
                 </Link>
               </div>
             ))}
           </div>
-          <Button
+          <div>
+            <SignedOut>
+              <SignInButton />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </div>
+          {/* <Button
             // onClick={handleUpload}
             className="bg-blue-600 text-white hover:bg-blue-700"
           >
             <Upload className="mr-2" size={20} />
             Upload File
-          </Button>
+          </Button> */}
         </div>
         <div className="rounded-lg bg-gray-800 shadow-xl">
           <div className="border-b border-gray-700 px-6 py-4">
