@@ -1,4 +1,4 @@
-// "use client";
+"use client";
 
 // import { useMemo, useState } from "react";
 import { Upload, ChevronRight } from "lucide-react";
@@ -7,6 +7,7 @@ import { FileRow, FolderRow } from "~/components/FileRow";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import { UploadButton } from "~/components/uploadthing";
 
 export default function GoogleDriveClone(props: {
   files: (typeof files_table.$inferSelect)[];
@@ -72,6 +73,7 @@ export default function GoogleDriveClone(props: {
             ))}
           </ul>
         </div>
+        <UploadButton endpoint={"imageUploader"} />
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { db } from "~/server/db";
 import {
   files_table as filesSchema,
   folders_table as foldersSchema,
+  type DB_FileType,
 } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 export const QUERIES = {
@@ -34,5 +35,19 @@ export const QUERIES = {
       .select()
       .from(foldersSchema)
       .where(eq(foldersSchema.parent, folderId));
+  },
+};
+
+export const MUTATIONS = {
+  createFile: async (input: {
+    file: {
+      name: string;
+      size: number;
+      url: string;
+      parent: number;
+    };
+    userId: string;
+  }) => {
+    return await db.insert(filesSchema).values(input.file);
   },
 };
