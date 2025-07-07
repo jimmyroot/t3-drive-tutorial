@@ -36,18 +36,29 @@ export const QUERIES = {
       .from(foldersSchema)
       .where(eq(foldersSchema.parent, folderId));
   },
+
+  getFolderById: async (folderId: number) => {
+    const folder = await db
+      .select()
+      .from(foldersSchema)
+      .where(eq(foldersSchema.id, folderId));
+    return folder[0];
+  },
 };
 
 export const MUTATIONS = {
   createFile: async (input: {
     file: {
-      ownerId: string;
       name: string;
       size: number;
       url: string;
+      parent: number;
     };
     userId: string;
   }) => {
-    // return await db.insert(filesSchema).values({ ...input.file });
+    return await db.insert(filesSchema).values({
+      ...input.file,
+      ownerId: input.userId,
+    });
   },
 };

@@ -17,6 +17,13 @@ export default function GoogleDriveClone(props: {
   parents: (typeof folders_table.$inferSelect)[];
 }) {
   const navigate = useRouter();
+  const currentFolderId = props.parents[props.parents.length - 1]?.id;
+
+  // Need to check if this works
+  if (!props.parents[0] == null)
+    throw new Error("Cannot proceed, can't find parent folder");
+  if (!currentFolderId)
+    throw new Error("Cannot proceed, can't find current folder");
 
   return (
     <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
@@ -73,6 +80,7 @@ export default function GoogleDriveClone(props: {
         </div>
         <UploadButton
           endpoint={"imageUploader"}
+          input={{ folderId: currentFolderId }} // Might need to change if this breaks something
           onClientUploadComplete={() => {
             navigate.refresh();
           }}
