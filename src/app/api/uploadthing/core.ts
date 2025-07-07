@@ -35,11 +35,13 @@ export const ourFileRouter = {
       // If you throw, the user will not be able to upload
       if (!user.userId) throw new UploadThingError("Unauthorized");
       if (!folder)
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new UploadThingError(
           "Required parent folder metadata is missing",
         );
 
       if (user.userId !== folder.ownerId)
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new UploadThingError("Unauthorized");
 
       // Whatever is returned here is accessible in onUploadComplete as `metadata`
