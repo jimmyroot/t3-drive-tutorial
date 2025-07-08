@@ -33,7 +33,10 @@ export const ourFileRouter = {
       const folder = await QUERIES.getFolderById(input.folderId);
 
       // If you throw, the user will not be able to upload
-      if (!user.userId) throw new UploadThingError("Unauthorized");
+      if (!user.userId)
+        // eslint-disable-next-line @typescript-eslint/only-throw-error
+        throw new UploadThingError("Unauthorized");
+
       if (!folder)
         // eslint-disable-next-line @typescript-eslint/only-throw-error
         throw new UploadThingError(
