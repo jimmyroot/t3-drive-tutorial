@@ -1,9 +1,9 @@
 "use client";
 
 // import { useMemo, useState } from "react";
-import { Upload, ChevronRight } from "lucide-react";
-import { Button } from "~/components/ui/button";
-import { FileRow, FolderRow } from "~/components/FileRow";
+import { ChevronRight } from "lucide-react";
+// import { Button } from "~/components/ui/button";
+import { FileRow, FolderRow } from "~/app/f/FileRow";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
@@ -79,7 +79,7 @@ export default function GoogleDriveClone(props: {
           </ul>
         </div>
         <UploadButton
-          endpoint={"imageUploader"}
+          endpoint={"driveUploader"}
           input={{ folderId: currentFolderId }} // Might need to change if this breaks something
           onClientUploadComplete={() => {
             navigate.refresh();
