@@ -19,7 +19,7 @@ export default function PosthogProvider({
   children: React.ReactNode;
 }) {
   useEffect(() => {
-    posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY as string, {
+    posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
       api_host: "/relay-Bdyy",
       ui_host: "https://eu.i.posthog.com",
       capture_pageview: false,

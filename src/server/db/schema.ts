@@ -4,7 +4,6 @@ import {
   int,
   bigint,
   text,
-  singlestoreTable,
   index,
   singlestoreTableCreator,
   timestamp,

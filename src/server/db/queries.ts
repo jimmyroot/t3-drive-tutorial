@@ -2,7 +2,6 @@ import { db } from "~/server/db";
 import {
   files_table as filesSchema,
   folders_table as foldersSchema,
-  type DB_FileType,
 } from "~/server/db/schema";
 import { eq } from "drizzle-orm";
 export const QUERIES = {

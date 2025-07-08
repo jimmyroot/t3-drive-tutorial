@@ -1,6 +1,6 @@
 import { db } from "~/server/db";
-import { mockFolders, mockFiles } from "~/lib/mock-data";
-import { files_table, folders_table } from "~/server/db/schema";
+import { mockFolders } from "~/lib/mock-data";
+import { folders_table } from "~/server/db/schema";
 import { auth } from "@clerk/nextjs/server";
 import { eq } from "drizzle-orm";
 
@@ -69,7 +69,7 @@ export default async function SandboxPage() {
       >
         <button type="submit">Seed</button>
       </form>
-      {folders && folders.map((folder) => <p>{folder.name}</p>)}
+      {folders?.map((folder) => <p key={folder.id}>{folder.name}</p>)}
     </div>
   );
 }
