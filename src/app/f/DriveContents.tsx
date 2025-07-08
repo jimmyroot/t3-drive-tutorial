@@ -79,6 +79,7 @@ export default function GoogleDriveClone(props: {
           </ul>
         </div>
         <UploadButton
+          className="mt-4"
           endpoint={"driveUploader"}
           input={{ folderId: currentFolderId }} // Might need to change if this breaks something
           onClientUploadComplete={() => {
