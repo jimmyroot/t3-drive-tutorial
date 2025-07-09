@@ -1,9 +1,9 @@
 import { Button } from "~/components/ui/button";
-import { Card, CardContent } from "~/components/ui/card";
-import { Cloud, Shield, Zap, Users } from "lucide-react";
+// import { Card, CardContent } from "~/components/ui/card";
+// import { Cloud, Shield, Zap, Users } from "lucide-react";
 import Link from "next/link";
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+// import { auth } from "@clerk/nextjs/server";
+// import { redirect } from "next/navigation";/
 import { SignInButton } from "@clerk/nextjs";
 
 export default function HomePage() {
