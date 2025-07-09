@@ -3,7 +3,7 @@ import {
   files_table as filesSchema,
   folders_table as foldersSchema,
 } from "~/server/db/schema";
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 export const QUERIES = {
   getAllParentsForFolder: async (folderId: number) => {
     const parents = [];
@@ -45,8 +45,17 @@ export const QUERIES = {
       .where(eq(foldersSchema.id, folderId));
     return folder[0];
   },
-};
 
+  getRootFolderForUser: async (userId: string) => {
+    const folder = await db
+      .select()
+      .from(foldersSchema)
+      .where(
+        and(eq(foldersSchema.ownerId, userId), isNull(foldersSchema.parent)),
+      );
+    return folder[0];
+  },
+};
 export const MUTATIONS = {
   createFile: async (input: {
     file: {

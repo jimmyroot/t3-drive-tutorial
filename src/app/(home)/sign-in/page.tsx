@@ -4,10 +4,11 @@ import { Cloud, Shield, Zap, Users } from "lucide-react";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { SignInButton } from "@clerk/nextjs";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
+    <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100">
       {/* Header */}
       <header className="border-b border-gray-200/50 bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
@@ -52,48 +53,28 @@ export default function HomePage() {
       </header>
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16 md:py-24">
+      <main className="container mx-auto flex-1 px-4 py-16 md:py-24">
         <div className="mx-auto max-w-4xl text-center">
           <h1 className="mb-6 text-4xl leading-tight font-bold text-gray-900 md:text-6xl">
-            Your files, everywhere.
+            Sign in
             <br />
-            <span className="text-gray-600">Simple and secure.</span>
           </h1>
           <p className="mx-auto mb-8 max-w-2xl text-xl leading-relaxed text-gray-600">
-            Store, sync, and share your files with T3 Drive. Access your
-            documents, photos, and projects from any device, anywhere in the
-            world.
+            Enter your login details below
           </p>
           <div className="mb-16 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <form
-              action={async () => {
-                "use server";
-                const session = await auth();
-                if (!session.userId) {
-                  redirect("/sign-in");
-                }
-                redirect("/drive");
-              }}
-            >
+            <SignInButton forceRedirectUrl={"/drive"}>
               <Button
                 size="lg"
                 className="bg-gray-900 px-8 py-3 text-lg text-white hover:bg-gray-800"
-                type="submit"
               >
-                Get Started Free
+                Sign In
               </Button>
-            </form>
-            <Button
-              variant="outline"
-              size="lg"
-              className="border-gray-300 bg-transparent px-8 py-3 text-lg"
-            >
-              Watch Demo
-            </Button>
+            </SignInButton>
           </div>
-
           {/* Feature Cards */}
           <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {/*
             <Card className="border-gray-200 bg-white/60 backdrop-blur-sm transition-all duration-200 hover:bg-white/80">
               <CardContent className="p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
@@ -107,9 +88,9 @@ export default function HomePage() {
                   needs.
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
 
-            <Card className="border-gray-200 bg-white/60 backdrop-blur-sm transition-all duration-200 hover:bg-white/80">
+            {/* <Card className="border-gray-200 bg-white/60 backdrop-blur-sm transition-all duration-200 hover:bg-white/80">
               <CardContent className="p-6 text-center">
                 <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-gray-100">
                   <Shield className="h-6 w-6 text-gray-700" />
@@ -145,13 +126,13 @@ export default function HomePage() {
                   Share and collaborate on files with your team seamlessly.
                 </p>
               </CardContent>
-            </Card>
+            </Card> */}
           </div>
         </div>
       </main>
 
       {/* CTA Section */}
-      <section className="border-t border-gray-200/50 bg-white/40 backdrop-blur-sm">
+      {/* <section className="border-t border-gray-200/50 bg-white/40 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-16 text-center">
           <h2 className="mb-4 text-3xl font-bold text-gray-900">
             Ready to get started?
@@ -167,7 +148,7 @@ export default function HomePage() {
             Start Free Today
           </Button>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="border-t border-gray-200/50 bg-white/60 backdrop-blur-sm">
